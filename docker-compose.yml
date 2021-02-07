@@ -1,0 +1,55 @@
+version: "3"
+services:
+  proxy-talentu:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./Docker/jwilder-nginx/client_max_body_size.conf:/etc/nginx/conf.d/client_max_body_size.conf
+      - ./Docker/certs:/etc/nginx/certs
+    container_name: talentu_proxy
+  talentu-candidatos:
+    build: .
+    volumes:
+      - .:/var/www/html:delegated
+      - ./Docker/php/xdebug.ini:/etc/php/7.4/cli/conf.d/20-xdebug.ini:delegated
+      - ./Docker/php/php.ini:/etc/php/7.4/fpm/php.ini:delegated
+    environment:
+      - VIRTUAL_HOST=candidatos.talentu.local
+      - VIRTUAL_PORT=443
+      - VIRTUAL_PROTO=https
+    command: >
+      sh -c '
+        /etc/init.d/nginx start && /etc/init.d/php7.4-fpm start
+        composer install
+        supervisord
+      '
+    depends_on:
+      - proxy-talentu
+    container_name: candidatos.talentu.local
+  talentu-db:
+    image: mysql:5.7
+    volumes:
+      - ./Docker/mysql/my.cnf:/etc/my.cnf
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: "laravel"
+      MYSQL_USER: "laravel"
+      MYSQL_PASSWORD: "laravel"
+      MYSQL_ROOT_PASSWORD: "laravel"
+    depends_on:
+      - talentu-candidatos
+    ports:
+      - 3306:3306
+    container_name: db.candidatos.talentu.local
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    container_name: redis.talentu.local
+networks:
+  default:
+    external:
+      name: nginx-proxy
