@@ -2,14 +2,21 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Message;
+namespace App\Application\Messages;
 
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class NotificationHandler implements MessageHandlerInterface
+class ContactMessage
 {
-    public function __invoke(NotificationHandler $message)
+    public string $concat;
+
+    public function __construct(string $contact)
     {
-        // ... do some work - like sending an SMS message!
+        $this->concat = $contact;
+    }
+
+    public function getContact(): string
+    {
+        return $this->concat;
     }
 }
