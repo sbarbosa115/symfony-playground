@@ -1,0 +1,8 @@
+POST http://ddd-first.local/contact/
+Content-Type: application/json
+
+{
+  "email": "sbarbosa115@gmail.com",
+  "message": "message test",
+  "subject": "Subject test"
+}

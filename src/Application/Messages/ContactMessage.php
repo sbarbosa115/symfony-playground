@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Messages;
 
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
-
 class ContactMessage
 {
     public string $concat;

@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 services:
   proxy-ddd-first:
     image: jwilder/nginx-proxy
@@ -11,8 +11,8 @@ services:
     build: .
     volumes:
       - .:/var/www/html:delegated
-      - ./Docker/php/xdebug.ini:/etc/php/8.0/cli/conf.d/20-xdebug.ini:delegated
-      - ./Docker/php/php.ini:/etc/php/8.0/fpm/php.ini:delegated
+      - ./Docker/php/xdebug.ini:/etc/php/8.0/mods-available/xdebug.ini
+#      - ./Docker/php/php.ini:/etc/php/8.0/mods-available/php.ini
     environment:
       - VIRTUAL_HOST=ddd-first.local
     command: >
@@ -42,7 +42,7 @@ services:
     image: redis
     ports:
       - 6379:6379
-    container_name: redis.talentu.local
+    container_name: redis.ddd-first.local
 networks:
   default:
     external:
