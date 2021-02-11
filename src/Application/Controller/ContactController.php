@@ -32,7 +32,6 @@ class ContactController extends AbstractController
      */
     public function create(MessageBusInterface $bus, Request $request): Response
     {
-
         $bus->dispatch(new ContactMessage($request->getContent()));
 
         return new JsonResponse(['status' => 'ok']);

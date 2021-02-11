@@ -209,6 +209,9 @@
     "symfony/amqp-messenger": {
         "version": "v5.2.3"
     },
+    "symfony/browser-kit": {
+        "version": "v5.2.3"
+    },
     "symfony/cache": {
         "version": "v5.2.3"
     },
@@ -240,6 +243,9 @@
         "version": "v5.2.3"
     },
     "symfony/doctrine-messenger": {
+        "version": "v5.2.3"
+    },
+    "symfony/dom-crawler": {
         "version": "v5.2.3"
     },
     "symfony/dotenv": {
@@ -374,6 +380,9 @@
             "config/packages/routing.yaml",
             "config/routes.yaml"
         ]
+    },
+    "symfony/serializer": {
+        "version": "v5.2.3"
     },
     "symfony/service-contracts": {
         "version": "v2.2.0"
