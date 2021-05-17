@@ -1,0 +1,20 @@
+POST http://ddd-first.local/contact/create-batch
+Content-Type: application/json
+
+[
+  {
+    "email": "sbarbosa115@gmail.com",
+    "message": "message test",
+    "subject": "Subject test"
+  },
+  {
+    "email": "sbarbosa117@gmail.com",
+    "message": "message test",
+    "subject": "Subject test"
+  },
+  {
+    "email": "sbarbosa118@gmail.com",
+    "message": "message test",
+    "subject": "Subject test"
+  }
+]

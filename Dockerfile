@@ -10,7 +10,6 @@ RUN apt install nginx php8.0 php8.0-fpm php8.0-common php8.0-mysql php8.0-mbstri
 COPY Docker/nginx/site.conf /etc/nginx/sites-available/site.conf
 COPY Docker/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY Docker/conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-#COPY Docker/php/xdebug.ini /etc/php/8.0/mods-available/xdebug.ini
 
 RUN ln -s /etc/nginx/sites-available/site.conf /etc/nginx/sites-enabled/
 
