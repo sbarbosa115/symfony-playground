@@ -2,6 +2,9 @@
 
 namespace App\Domain\Entity;
 
+use App\Domain\Entity\Traits\CustomUniqueId;
+use App\Domain\Entity\Traits\Softdeleteable;
+use App\Domain\Entity\Traits\TimeStamps;
 use App\Domain\Repository\TransactionRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,17 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Transaction
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private int $id;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private \DateTimeInterface $createdAt;
+    use CustomUniqueId;
+    use Softdeleteable;
+    use TimeStamps;
 
     /**
      * @ORM\Column(type="integer")
@@ -38,16 +33,6 @@ class Transaction
         $this->createdAt = new DateTime();
         $this->failed = 0;
         $this->successfully = 0;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
     }
 
     public function getSuccessfully(): ?int

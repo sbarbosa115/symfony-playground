@@ -20,6 +20,7 @@
         "symfony/messenger": "5.2.*",
         "symfony/proxy-manager-bridge": "5.2.*",
         "symfony/serializer": "5.2.*",
+        "symfony/uid": "5.2.*",
         "symfony/yaml": "5.2.*"
     },
     "config": {
@@ -54,6 +55,9 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "deploy-database-docker": [
+            "bin/console doctrine:migrations:migrate"
         ]
     },
     "conflict": {
@@ -66,6 +70,7 @@
         }
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "phpunit/phpunit": "^9.5",
         "symfony/maker-bundle": "^1.29",
         "symfony/phpunit-bridge": "^5.2"
