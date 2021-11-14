@@ -6,6 +6,7 @@ namespace App\Application\Controller;
 
 use App\Application\Messages\ContactMessage;
 use App\Domain\Entity\Transaction;
+use App\Domain\Repository\TransactionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,10 +22,12 @@ class ContactController extends AbstractController
 {
 
     /**
+     *
      * @Route("/", name="index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(TransactionRepository $transactionRepo): Response
     {
+        $transaction = $transactionRepo->find('1');
         return new JsonResponse(['status' => 'ok']);
     }
 
