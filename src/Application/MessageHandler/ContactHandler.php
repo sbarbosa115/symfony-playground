@@ -27,6 +27,7 @@ class ContactHandler implements MessageHandlerInterface
 
     public function __invoke(ContactMessage $message): void
     {
+        sleep(10);
         // HERE STORE IT INTO THE DATABASE LOGIC
         $payload = json_decode($message->getContact(), true, 512, JSON_THROW_ON_ERROR);
         $user = (new User())->setEmail($payload['email']);
@@ -39,7 +40,6 @@ class ContactHandler implements MessageHandlerInterface
 
         $this->manager->persist($user);
         $this->manager->flush();
-
     }
 
 }

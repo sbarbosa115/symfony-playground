@@ -7,7 +7,7 @@ use App\Domain\Entity\Tag;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class ProductFixtures extends Fixture
+class TagsFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
@@ -16,15 +16,17 @@ class ProductFixtures extends Fixture
             ->setName('Product 1 Name')
             ->setPrice(99.00);
 
-//        $tag = (new Tag())
-//            ->setName('Tag Product 1')
-//            ->setDescription('Description Product 1');
+        for ($i = 0; $i < 200000; $i++) {
 
-//        $product->addTag($tag);
-//        $tag->addProduct($product);
+            $tag = (new Tag())
+                ->setName(sprintf('Tag Product %s', $i))
+                ->setDescription(sprintf('Description Product %s', $i));
+            $tag->addProduct($product);
+
+            $manager->persist($tag);
+        }
 
         $manager->persist($product);
-//        $manager->persist($tag);
         $manager->flush();
     }
 }

@@ -6,6 +6,7 @@ use App\Domain\Entity\Traits\CustomUniqueId;
 use App\Domain\Entity\Traits\Softdeleteable;
 use App\Domain\Entity\Traits\TimeStamps;
 use App\Domain\Repository\TagRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -30,13 +31,16 @@ class Tag
     private string $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Product::class, inversedBy="tags")
+     * @ORM\ManyToMany(targetEntity=Product::class, inversedBy="tags", cascade={"ALL"})
      */
     private $products;
 
     public function __construct()
     {
         $this->products = new ArrayCollection();
+
+        $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
     }
 
     public function getName(): ?string

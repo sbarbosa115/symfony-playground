@@ -41,7 +41,7 @@ class Product
     private $tags;
 
     /**
-     * @ORM\OneToMany(targetEntity=File::class, mappedBy="product")
+     * @ORM\OneToMany(targetEntity=File::class, mappedBy="product", cascade={"all"}, fetch="EXTRA_LAZY")
      */
     private $files;
 

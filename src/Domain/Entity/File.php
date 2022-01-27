@@ -6,6 +6,7 @@ use App\Domain\Entity\Traits\CustomUniqueId;
 use App\Domain\Entity\Traits\Softdeleteable;
 use App\Domain\Entity\Traits\TimeStamps;
 use App\Domain\Repository\FileRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,9 +35,14 @@ class File
 
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="files")
-     * @ORM\JoinColumn(nullable=false)
      */
     private Product $product;
+
+    public function __construct()
+    {
+        $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
+    }
 
     public function getUrl(): ?string
     {

@@ -1,29 +1,29 @@
 version: "3.7"
 services:
-  proxy-ddd-first:
+  proxy-symfony-playground:
     image: jwilder/nginx-proxy
     ports:
       - "80:80"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-    container_name: ddd_first_proxy
-  ddd-first-web:
+    container_name: proxy-symfony-playground
+  web-symfony-playground:
     build: .
     volumes:
       - .:/var/www/html:delegated
-      - ./Docker/php/xdebug.ini:/etc/php/8.0/mods-available/xdebug.ini
+      - ./Docker/php/xdebug.ini:/etc/php/8.1/mods-available/xdebug.ini
 #      - ./Docker/php/php.ini:/etc/php/8.0/mods-available/php.ini
     environment:
-      - VIRTUAL_HOST=ddd-first.local
+      - VIRTUAL_HOST=symfony-playground.local
     command: >
       sh -c '
-        /etc/init.d/nginx start && /etc/init.d/php8.0-fpm start
+        /etc/init.d/nginx start && /etc/init.d/php8.1-fpm start
         supervisord
       '
     depends_on:
-      - proxy-ddd-first
-    container_name: ddd-first.local
-  ddd-first-db:
+      - proxy-symfony-playground
+    container_name: web-symfony-playground.local
+  db-symfony-playground:
     image: mysql:5.7
     volumes:
       - ./Docker/mysql/my.cnf:/etc/my.cnf
@@ -34,16 +34,16 @@ services:
       MYSQL_PASSWORD: "symfony"
       MYSQL_ROOT_PASSWORD: "symfony"
     depends_on:
-      - ddd-first-web
+      - web-symfony-playground
     ports:
       - 3306:3306
-    container_name: db.ddd-first.local
-  ddd-first-redis:
+    container_name: db-symfony-playground.local
+  symfony-playground-redis:
     image: redis
     ports:
       - 6379:6379
-    container_name: redis.ddd-first.local
+    container_name: redis-symfony-playground.local
 networks:
   default:
     external:
-      name: nginx-proxy
+      name: symfony-playground
